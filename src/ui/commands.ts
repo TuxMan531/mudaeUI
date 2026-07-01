@@ -54,6 +54,7 @@ export const COMMANDS: MudaeCommand[] = [
   // --- Timers / status ---
   { id: 'tu', label: '$tu', base: 'tu', description: 'Timer dashboard — all cooldowns at a glance', section: 'timers', primary: true },
   { id: 'daily', label: '$daily', base: 'daily', description: 'Daily reward + free rolls reset (20h)', section: 'timers', cooldownKey: 'daily' },
+  { id: 'dk', label: '$dk', base: 'dk', description: 'Daily kakera payout (20h)', section: 'timers', cooldownKey: 'dk' },
   { id: 'vote', label: '$vote', base: 'vote', description: 'Vote on top.gg for roll resets (~12h)', section: 'timers', cooldownKey: 'vote' },
   { id: 'rt', label: '$rt', base: 'rt', description: 'Reset your claim timer (badge-gated)', section: 'timers' },
   { id: 'freeclaim', label: '$freeclaim', base: 'freeclaim', description: 'Reset current claim timer (1 / 3h)', section: 'timers' },
@@ -62,8 +63,8 @@ export const COMMANDS: MudaeCommand[] = [
   { id: 'rolls', label: '$rolls', base: 'rolls', description: 'Rolls remaining this hour', section: 'timers' },
 
   // --- Kakera ---
-  { id: 'dk', label: '$dk', base: 'dk', description: 'Daily kakera payout (20h)', section: 'kakera', cooldownKey: 'dk' },
   { id: 'k', label: '$k', base: 'k', description: 'Your kakera balance', section: 'kakera' },
+  { id: 'kt', label: '$kt', base: 'kt', description: 'Kakera tower', section: 'kakera' },
   { id: 'ku', label: '$ku', base: 'ku', description: 'Kakera react power % + refill time', section: 'kakera', cooldownKey: 'power' },
 
   // --- Collection / harem ---
@@ -75,6 +76,7 @@ export const COMMANDS: MudaeCommand[] = [
   { id: 'div', label: '$div', base: 'div', description: 'Divorce a character (kakera refund)', section: 'collection', needsArgs: true },
   { id: 'im', label: '$im', base: 'im', description: 'Character info (name)', section: 'collection', needsArgs: true },
   { id: 'sl', label: '$sl', base: 'sl', description: 'Series list', section: 'collection' },
+  { id: 'profile', label: '$profile', base: 'profile', description: 'Your Mudae profile', section: 'collection' },
 
   // --- Wishlist ---
   { id: 'wl', label: '$wl', base: 'wl', description: 'View your wishlist', section: 'wishlist' },

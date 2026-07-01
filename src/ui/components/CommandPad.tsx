@@ -54,7 +54,7 @@ function CommandButton({
         {cmd.label}
         {cmd.needsArgs && <span className="ml-1 text-[10px] text-zinc-400">…</span>}
       </span>
-      <span className="block max-w-[150px] truncate text-[11px] leading-tight text-zinc-400">
+      <span className="block max-w-[170px] text-[11px] leading-tight text-zinc-400">
         {onCooldown ? `ready in ${formatDuration(remMs)}` : cmd.description}
       </span>
     </button>

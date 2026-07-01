@@ -8,6 +8,11 @@ if (started) {
   app.quit();
 }
 
+// Discord serves an "unsupported browser" page when the UA contains "Electron".
+// Spoof a plain Chrome UA app-wide so the embedded <webview> loads the real client.
+app.userAgentFallback =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+
 const createWindow = () => {
   // Compact, always-handy companion window meant to sit beside Discord.
   const mainWindow = new BrowserWindow({
@@ -20,6 +25,7 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
+      webviewTag: true, // enable the <webview> that embeds Discord
     },
   });
 

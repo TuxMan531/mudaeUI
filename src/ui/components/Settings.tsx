@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { Search } from 'lucide-react';
-import type { AppSettings, WindowInfo } from '../../shared/types';
+import type { AppSettings } from '../../shared/types';
 import { cn } from '../lib/utils';
 
 interface Props {
@@ -9,56 +7,8 @@ interface Props {
 }
 
 export function Settings({ settings, onChange }: Props) {
-  const [windows, setWindows] = useState<WindowInfo[] | null>(null);
-  const [scanning, setScanning] = useState(false);
-
-  const scan = async () => {
-    setScanning(true);
-    try {
-      setWindows(await window.mudae.listWindows());
-    } finally {
-      setScanning(false);
-    }
-  };
-
   return (
     <div className="flex flex-col gap-5 text-sm">
-      {/* Target window */}
-      <Field label="Target (app name on macOS · window title on Windows)" hint='Usually just "Discord".'>
-        <div className="flex gap-2">
-          <input
-            value={settings.windowTitleMatch}
-            onChange={(e) => onChange({ windowTitleMatch: e.target.value })}
-            className="flex-1 rounded border border-zinc-700 bg-zinc-900 px-2 py-1.5 font-mono text-zinc-100 outline-none focus:border-roll"
-            placeholder="Discord"
-          />
-          <button
-            type="button"
-            onClick={scan}
-            className="flex items-center gap-1 rounded border border-zinc-700 bg-zinc-800 px-2 py-1.5 hover:bg-zinc-700"
-          >
-            <Search className="h-3.5 w-3.5" /> {scanning ? '…' : 'Scan'}
-          </button>
-        </div>
-        {windows && (
-          <div className="mt-2 max-h-32 overflow-auto rounded border border-zinc-800">
-            {windows.length === 0 && <p className="px-2 py-1 text-xs text-zinc-500">No windows found (grant permissions on macOS).</p>}
-            {windows.map((w) => (
-              <button
-                key={w.title}
-                type="button"
-                onClick={() => onChange({ windowTitleMatch: w.title })}
-                className="block w-full truncate px-2 py-1 text-left text-xs hover:bg-zinc-800"
-                title={w.title}
-              >
-                {w.title}
-              </button>
-            ))}
-          </div>
-        )}
-      </Field>
-
-      {/* Prefix mode */}
       <Field label="Command form" hint="Slash applies to roll commands; utilities always use $.">
         <div className="flex gap-2">
           {(['dollar', 'slash'] as const).map((mode) => (
@@ -79,27 +29,19 @@ export function Settings({ settings, onChange }: Props) {
         </div>
       </Field>
 
-      {/* Throttle */}
-      <Field label="Throttle (ms between sends)" hint="Anti-spam guard; lowest Discord-ToS risk.">
+      <Field label="Claim text" hint="Sent by the big Claim button to claim the latest roll.">
         <input
-          type="number"
-          min={0}
-          step={100}
-          value={settings.throttleMs}
-          onChange={(e) => onChange({ throttleMs: Math.max(0, Number(e.target.value) || 0) })}
-          className="w-32 rounded border border-zinc-700 bg-zinc-900 px-2 py-1.5 font-mono text-zinc-100 outline-none focus:border-roll"
+          value={settings.claimText}
+          onChange={(e) => onChange({ claimText: e.target.value })}
+          className="w-40 rounded border border-zinc-700 bg-zinc-900 px-2 py-1.5 font-mono text-zinc-100 outline-none focus:border-roll"
+          placeholder="+:100:"
         />
       </Field>
 
-      {/* Restore clipboard */}
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={settings.restoreClipboard}
-          onChange={(e) => onChange({ restoreClipboard: e.target.checked })}
-        />
-        <span className="text-zinc-300">Restore my clipboard after each send</span>
-      </label>
+      <p className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 text-xs text-zinc-500">
+        Discord runs embedded in the app — open it with the <strong className="text-zinc-300">Discord</strong> button
+        to log in once or claim manually. No Screen Recording or Accessibility permissions needed.
+      </p>
     </div>
   );
 }
